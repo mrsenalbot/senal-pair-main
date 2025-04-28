@@ -14,11 +14,9 @@ const upload = (data, name) => {
             data.pipe(file);
 
             file.on('complete', () => {
-                file.link((err, url) => {
-                    storage.close(); // clean up connection
-                    if (err) return reject(err);
-                    resolve(url);
-                });
+                const link = `https://mega.nz/file/${file.downloadId}#${file.key}`;
+                storage.close(); // clean up connection
+                resolve(link);
             });
 
             file.on('error', (err) => {
